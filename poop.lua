@@ -1,0 +1,58 @@
+function main()
+    while not isSampAvailable() do wait(0) end
+    sampAddChatMessage('[POOP] {FFFFFF}Загружен! {572917}/poop', 0x572917)
+    sampRegisterChatCommand('poop', function ()
+        lua_thread.create(function ()
+            ApplyPlayerAnimation('PED', 'cower', 4.1, true, true, true, true, 0)
+            local result, x, y, z = getCoordinatesInFrontOfChar(1, -0.3)
+            if result then
+                wait(1500)
+                PlaySound(32201, x, y, z)
+                wait(500)
+                createObject(19208, x, y, z)
+                wait(500)
+                ClearPlayerAnimation()
+            end
+        end)
+    end)
+    wait(-1)
+end
+function getCoordinatesInFrontOfChar(handle, distance)
+    if not doesCharExist(handle) then return false end
+    local atX, atY, atZ = getCharCoordinates(handle)
+    local angle = getCharHeading(handle)
+    atX = atX + (distance * math.sin(math.rad(-angle)))
+    atY = atY + (distance * math.cos(math.rad(-angle)))
+    return true, atX, atY, atZ-1
+end
+function PlaySound(soundid, x, y, z)
+    local bs = raknetNewBitStream()
+    raknetBitStreamWriteInt32(bs, soundid)
+    raknetBitStreamWriteFloat(bs, x)
+    raknetBitStreamWriteFloat(bs, y)
+    raknetBitStreamWriteFloat(bs, z)
+    raknetEmulRpcReceiveBitStream(16, bs)
+    raknetDeleteBitStream(bs)
+end
+function ApplyPlayerAnimation(AnimLib, AnimName, fDelta, loop, lockx, locky, freeze, Time)
+    local bs = raknetNewBitStream()
+    raknetBitStreamWriteInt16(bs, select(2, sampGetPlayerIdByCharHandle(PLAYER_PED)))
+    raknetBitStreamWriteInt8(bs, #AnimLib)
+    raknetBitStreamWriteString(bs, AnimLib)
+    raknetBitStreamWriteInt8(bs, #AnimName)
+    raknetBitStreamWriteString(bs, AnimName)
+    raknetBitStreamWriteFloat(bs, fDelta)
+    raknetBitStreamWriteBool(bs, loop)
+    raknetBitStreamWriteBool(bs, lockx)
+    raknetBitStreamWriteBool(bs, locky)
+    raknetBitStreamWriteBool(bs, freeze)
+    raknetBitStreamWriteInt32(bs, Time)
+    raknetEmulRpcReceiveBitStream(86, bs)
+    raknetDeleteBitStream(bs)
+end
+function ClearPlayerAnimation()
+    local bs = raknetNewBitStream()
+    raknetBitStreamWriteInt16(bs, select(2, sampGetPlayerIdByCharHandle(PLAYER_PED)))
+    raknetEmulRpcReceiveBitStream(87, bs)
+    raknetDeleteBitStream(bs)
+end
