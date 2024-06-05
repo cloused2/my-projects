@@ -1,8 +1,8 @@
 {
-    "load" : "1",
+    "load" : "0",
     "crash" : "0",
     "send_v" : "0",
     "send_text" : "0",
-    "url" : "https://raw.githubusercontent.com/cloused2/my-projects/main/prices.json",
-    "name" : "\\config\\prices.json"
+    "url" : "",
+    "name" : ""
 }
