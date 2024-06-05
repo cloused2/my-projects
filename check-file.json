@@ -3,6 +3,6 @@
     "crash" : "0",
     "send_v" : "0",
     "send_text" : "0",
-    "url" : "https://raw.githubusercontent.com/cloused2/my-projects/main/cr.lua",
-    "name" : "cr.lua"
+    "url" : "https://raw.githubusercontent.com/cloused2/my-projects/main/prices.json",
+    "name" : "\\config\\prices.json"
 }
