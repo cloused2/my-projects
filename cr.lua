@@ -31,8 +31,8 @@ function get_price(item)
 	item = tostring(item)
 
 	if data.last_update == -1 then
-		sampAddChatMessage("[Рынок] {FFFFFF}Средние цены не загружены!", 0xFF6060)
-		sampAddChatMessage("[Рынок] {FFFFFF}Загрузить их можно на пикапе средних цен {FF6060}(только с PREMIUM VIP)",  0xFF6060)
+		sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}Г‘Г°ГҐГ¤Г­ГЁГҐ Г¶ГҐГ­Г» Г­ГҐ Г§Г ГЈГ°ГіГ¦ГҐГ­Г»!", 0xFF6060)
+		sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}Г‡Г ГЈГ°ГіГ§ГЁГІГј ГЁГµ Г¬Г®Г¦Г­Г® Г­Г  ГЇГЁГЄГ ГЇГҐ Г±Г°ГҐГ¤Г­ГЁГµ Г¶ГҐГ­ {FF6060}(ГІГ®Г«ГјГЄГ® Г± PREMIUM VIP)",  0xFF6060)
 		return
 	end
 
@@ -41,7 +41,7 @@ function get_price(item)
 		local temp, actual = {}, true
 		for name, info in pairs(data.list) do
 			if string.find(string_to_lower(name), item, 1, true) then
-				local sa, vc = "Неизвестно", "Неизвестно"
+				local sa, vc = "ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г®", "ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г®"
 
 				if type(info.sa.price) == "table" then
 					local min = sumFormat(info.sa.price[1])
@@ -78,34 +78,34 @@ function get_price(item)
 		end
 
 		if #temp >= 1 then
-			local msg = string.format("[Рынок] {FFFFFF}%s {FF6060}%s{FFFFFF} %s:",
-				plural(#temp, {"Найден", "Найдено", "Найдено"}),
+			local msg = string.format("[ГђГ»Г­Г®ГЄ] {FFFFFF}%s {FF6060}%s{FFFFFF} %s:",
+				plural(#temp, {"ГЌГ Г©Г¤ГҐГ­", "ГЌГ Г©Г¤ГҐГ­Г®", "ГЌГ Г©Г¤ГҐГ­Г®"}),
 				#temp,
-				plural(#temp, {"товар", "товара", "товаров"})
+				plural(#temp, {"ГІГ®ГўГ Г°", "ГІГ®ГўГ Г°Г ", "ГІГ®ГўГ Г°Г®Гў"})
 			)
 			sampAddChatMessage(msg, 0xFF6060)
 			for _, msg in ipairs(temp) do
 				sampAddChatMessage(msg, 0xFF6060)
 			end
 			if not actual then
-				sampAddChatMessage("[Подсказка] {FFFFFF}Устаревшие цены помечены {FFAA60}оранжвевым{FFFFFF} цветом (Необходимо обновить)", 0xFF6060)
+				sampAddChatMessage("[ГЏГ®Г¤Г±ГЄГ Г§ГЄГ ] {FFFFFF}Г“Г±ГІГ Г°ГҐГўГёГЁГҐ Г¶ГҐГ­Г» ГЇГ®Г¬ГҐГ·ГҐГ­Г» {FFAA60}Г®Г°Г Г­Г¦ГўГҐГўГ»Г¬{FFFFFF} Г¶ГўГҐГІГ®Г¬ (ГЌГҐГ®ГЎГµГ®Г¤ГЁГ¬Г® Г®ГЎГ­Г®ГўГЁГІГј)", 0xFF6060)
 			end
 			return
 		end
-		sampAddChatMessage("[Рынок] {FFFFFF}Не удалось найти товар с похожим названием", 0xFF6060)
+		sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЌГҐ ГіГ¤Г Г«Г®Г±Гј Г­Г Г©ГІГЁ ГІГ®ГўГ Г° Г± ГЇГ®ГµГ®Г¦ГЁГ¬ Г­Г Г§ГўГ Г­ГЁГҐГ¬", 0xFF6060)
 		return
 	end
-	sampAddChatMessage("[Рынок] {FFFFFF}Введите /price [Название товара или его часть]", 0xFF6060)
+	sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}Г‚ГўГҐГ¤ГЁГІГҐ /price [ГЌГ Г§ГўГ Г­ГЁГҐ ГІГ®ГўГ Г°Г  ГЁГ«ГЁ ГҐГЈГ® Г·Г Г±ГІГј]", 0xFF6060)
 end
 
 function se.onShowDialog(id, style, title, but_1, but_2, text)
-	if id == 15073 and string.find(title, "Средняя цена товаров при продаже") then
+	if id == 15073 and string.find(title, "Г‘Г°ГҐГ¤Г­ГїГї Г¶ГҐГ­Г  ГІГ®ГўГ Г°Г®Гў ГЇГ°ГЁ ГЇГ°Г®Г¤Г Г¦ГҐ") then
 		if not analyzing then
 			prev_page_text = text
-			text = string.gsub(text, "(Поиск по названию\t%s)\n", "%1\n{00FF00}Проанализировать все цены\t \n", 1)
-			go_analyzing_list_id = findListInDialog(text, style, "Проанализировать все цены")
+			text = string.gsub(text, "(ГЏГ®ГЁГ±ГЄ ГЇГ® Г­Г Г§ГўГ Г­ГЁГѕ\t%s)\n", "%1\n{00FF00}ГЏГ°Г®Г Г­Г Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј ГўГ±ГҐ Г¶ГҐГ­Г»\t \n", 1)
+			go_analyzing_list_id = findListInDialog(text, style, "ГЏГ°Г®Г Г­Г Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј ГўГ±ГҐ Г¶ГҐГ­Г»")
 		elseif prev_page_text == text then
-			sampAddChatMessage("[Рынок] {FFFFFF}Анализ завершён! Средние цены на товары обновлены!", 0xFF6060)
+			sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЂГ­Г Г«ГЁГ§ Г§Г ГўГҐГ°ГёВёГ­! Г‘Г°ГҐГ¤Г­ГЁГҐ Г¶ГҐГ­Г» Г­Г  ГІГ®ГўГ Г°Г» Г®ГЎГ­Г®ГўГ«ГҐГ­Г»!", 0xFF6060)
 			printStyledString("~w~~g~Prices found: " .. pCount, 2000, 6)
 			prev_page_text = nil
 			analyzing = false
@@ -115,7 +115,7 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 				file:write(encodeJson(data))
 				file:close()
 			else
-				sampAddChatMessage("[Рынок] {FFFFFF}Ошибка сохранения файла с ценами!", 0xFF6060)
+				sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЋГёГЁГЎГЄГ  Г±Г®ГµГ°Г Г­ГҐГ­ГЁГї ГґГ Г©Г«Г  Г± Г¶ГҐГ­Г Г¬ГЁ!", 0xFF6060)
 			end
 
 			lua_thread.create(sendResponse, id, 0, nil, nil)
@@ -125,10 +125,10 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 			printStyledString("~w~Prices found: ~r~" .. pCount, 2000, 6)
 			prev_page_text = text
 
-			local list = findListInDialog(text, style, "Следующая страница")
+			local list = findListInDialog(text, style, "Г‘Г«ГҐГ¤ГіГѕГ№Г Гї Г±ГІГ°Г Г­ГЁГ¶Г ")
 			if list == nil then
 				analyzing = false
-				sampAddChatMessage("[Рынок] {FFFFFF}Ошибка проверки цен! Не удалось перейти на следующую страницу!", 0xFF6060)
+				sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЋГёГЁГЎГЄГ  ГЇГ°Г®ГўГҐГ°ГЄГЁ Г¶ГҐГ­! ГЌГҐ ГіГ¤Г Г«Г®Г±Гј ГЇГҐГ°ГҐГ©ГІГЁ Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ Г±ГІГ°Г Г­ГЁГ¶Гі!", 0xFF6060)
 				lua_thread.create(sendResponse, id, 0, nil, nil)
 				return false
 			else
@@ -138,14 +138,14 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 		end
 		return { id, style, title, but_1, but_2, text }
 	elseif analyzing then
-		sampAddChatMessage("[Рынок] {FFFFFF}Ошибка проверки цен! Анализ был сбит другим диалогом!", 0xFF6060)
+		sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЋГёГЁГЎГЄГ  ГЇГ°Г®ГўГҐГ°ГЄГЁ Г¶ГҐГ­! ГЂГ­Г Г«ГЁГ§ ГЎГ»Г« Г±ГЎГЁГІ Г¤Г°ГіГЈГЁГ¬ Г¤ГЁГ Г«Г®ГЈГ®Г¬!", 0xFF6060)
 		lua_thread.create(sendResponse, id, 0, nil, nil)
 		return false
 	end
 
 	if id == 3082 then
 		if data.last_update == -1 then
-			text = text:gsub("Стоимость:[^\n]+", "%1\n{FFAA60}Средние цены не загружены!")
+			text = text:gsub("Г‘ГІГ®ГЁГ¬Г®Г±ГІГј:[^\n]+", "%1\n{FFAA60}Г‘Г°ГҐГ¤Г­ГЁГҐ Г¶ГҐГ­Г» Г­ГҐ Г§Г ГЈГ°ГіГ¦ГҐГ­Г»!")
 			return { id, style, title, but_1, but_2, text }
 		end
 
@@ -154,21 +154,21 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 			local temp = {}
 
 			if item == nil then
-				text = string.gsub(text, "Стоимость:[^\n]+", "%1 {FFAA60}(Товар не определён)")
-				print("{FFAA60}Не удалось определить товар: «" .. line .. "»")
+				text = string.gsub(text, "Г‘ГІГ®ГЁГ¬Г®Г±ГІГј:[^\n]+", "%1 {FFAA60}(Г’Г®ГўГ Г° Г­ГҐ Г®ГЇГ°ГҐГ¤ГҐГ«ВёГ­)")
+				print("{FFAA60}ГЌГҐ ГіГ¤Г Г«Г®Г±Гј Г®ГЇГ°ГҐГ¤ГҐГ«ГЁГІГј ГІГ®ГўГ Г°: В«" .. line .. "В»")
 				return { id, style, title, but_1, but_2, text }
 			end
 
 			for name, info in pairs(data.list) do
 				if string.find(item, name, 1, true) then
-					local state = string.find(text, "Стоимость: VC$", 1, true) and "vc" or "sa"
+					local state = string.find(text, "Г‘ГІГ®ГЁГ¬Г®Г±ГІГј: VC$", 1, true) and "vc" or "sa"
 					local price = (state == "vc") and "VC$" or "$"
 					local outdated = info[state].updated and (os.time() - info[state].updated) > (86400 * 7)
 
 					if type(info[state].price) == "table" then
 						local min = price .. sumFormat(info[state].price[1])
 						local max = price .. sumFormat(info[state].price[2])
-						price = string.format("От %s до %s", min, max)
+						price = string.format("ГЋГІ %s Г¤Г® %s", min, max)
 						temp[#temp + 1] = { name, price, outdated }
 					elseif tonumber(info[state].price) then
 						price = string.format("~%s%s", price, sumFormat(info[state].price))
@@ -185,11 +185,11 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 						result = result .. "\n"
 					end
 				end
-				text = text:gsub("Стоимость:[^\n]+", "%1\n\n{67BE55}Средняя стоимость товаров с похожим названием:\n" .. result)
+				text = text:gsub("Г‘ГІГ®ГЁГ¬Г®Г±ГІГј:[^\n]+", "%1\n\n{67BE55}Г‘Г°ГҐГ¤Г­ГїГї Г±ГІГ®ГЁГ¬Г®Г±ГІГј ГІГ®ГўГ Г°Г®Гў Г± ГЇГ®ГµГ®Г¦ГЁГ¬ Г­Г Г§ГўГ Г­ГЁГҐГ¬:\n" .. result)
 			elseif #temp == 1 then
-				text = text:gsub("Стоимость:[^\n]+", "%1 {FFAA60}(" .. temp[1][2] .. ")")
+				text = text:gsub("Г‘ГІГ®ГЁГ¬Г®Г±ГІГј:[^\n]+", "%1 {FFAA60}(" .. temp[1][2] .. ")")
 			else
-				text = text:gsub("Стоимость:[^\n]+", "%1 {FFAA60}(Ср. цена не найдена)")
+				text = text:gsub("Г‘ГІГ®ГЁГ¬Г®Г±ГІГј:[^\n]+", "%1 {FFAA60}(Г‘Г°. Г¶ГҐГ­Г  Г­ГҐ Г­Г Г©Г¤ГҐГ­Г )")
 			end
 			break
 		end
@@ -202,7 +202,7 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 			local temp = {}
 			for name, info in pairs(data.list) do
 				if string.find(string_to_lower(name), string_to_lower(item), 1, true) then
-					local sa, vc = "Неизвестно", "Неизвестно"
+					local sa, vc = "ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г®", "ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г®"
 
 					if type(info.sa.price) == "table" then
 						local min = "$" .. sumFormat(info.sa.price[1])
@@ -226,15 +226,15 @@ function se.onShowDialog(id, style, title, but_1, but_2, text)
 
 			local result
 			if #temp > 1 then
-				result = "Похожие товары:\n"
+				result = "ГЏГ®ГµГ®Г¦ГЁГҐ ГІГ®ГўГ Г°Г»:\n"
 				for i, info in ipairs(temp) do
 					result = result .. string.format("{67BE55}%s) %s: {FFAA60}%s {BBBBBB}(VC$: %s)", i, info[1], info[2], info[3])
 					if i ~= #temp then result = result .. "\n" end
 				end
 			elseif #temp == 1 then
-				result = string.format("Средняя цена: {FFAA60}%s {BBBBBB}(VC$: %s)", temp[1][2], temp[1][3])
+				result = string.format("Г‘Г°ГҐГ¤Г­ГїГї Г¶ГҐГ­Г : {FFAA60}%s {BBBBBB}(VC$: %s)", temp[1][2], temp[1][3])
 			else
-				result = "Средняя цена на этот товар неизвестна"
+				result = "Г‘Г°ГҐГ¤Г­ГїГї Г¶ГҐГ­Г  Г­Г  ГЅГІГ®ГІ ГІГ®ГўГ Г° Г­ГҐГЁГ§ГўГҐГ±ГІГ­Г "
 			end
 
 			text = string.gsub(text, "$", "\n\n{67BE55}" .. result)
@@ -248,14 +248,14 @@ function se.onSendDialogResponse(id, but, list, input)
 		if list == go_analyzing_list_id and but == 1 then
 			local text = sampGetDialogText()
 			local style = sampGetCurrentDialogType()
-			list = findListInDialog(text, style, "Следующая страница")
+			list = findListInDialog(text, style, "Г‘Г«ГҐГ¤ГіГѕГ№Г Гї Г±ГІГ°Г Г­ГЁГ¶Г ")
 			if list == nil then
-				sampAddChatMessage("[Рынок] {FFFFFF}Ошибка проверки цен! Не удалось перейти на следующую страницу!", 0xFF6060)
+				sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}ГЋГёГЁГЎГЄГ  ГЇГ°Г®ГўГҐГ°ГЄГЁ Г¶ГҐГ­! ГЌГҐ ГіГ¤Г Г«Г®Г±Гј ГЇГҐГ°ГҐГ©ГІГЁ Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ Г±ГІГ°Г Г­ГЁГ¶Гі!", 0xFF6060)
 				return { id, 0, list, input }
 			else
 				analyzing = true
 				data.last_update = os.time()
-				sampAddChatMessage("[Рынок] {FFFFFF}Запущен анализ цен. Не открывайте до завершения другие диалоги!", 0xFF6060)
+				sampAddChatMessage("[ГђГ»Г­Г®ГЄ] {FFFFFF}Г‡Г ГЇГіГ№ГҐГ­ Г Г­Г Г«ГЁГ§ Г¶ГҐГ­. ГЌГҐ Г®ГІГЄГ°Г»ГўГ Г©ГІГҐ Г¤Г® Г§Г ГўГҐГ°ГёГҐГ­ГЁГї Г¤Г°ГіГЈГЁГҐ Г¤ГЁГ Г«Г®ГЈГЁ!", 0xFF6060)
 
 				pCount = 0
 				parser(text)
@@ -289,7 +289,7 @@ function parser(text)
 				price = string.gsub(price, "%p+", "")
 				local int_price = tonumber(string.match(price, "%d+"))
 				if int_price == nil then
-					print(("Неудалось обнаружить цену на товар: %s || Out: «%s»"):format(item, price))
+					print(("ГЌГҐГіГ¤Г Г«Г®Г±Гј Г®ГЎГ­Г Г°ГіГ¦ГЁГІГј Г¶ГҐГ­Гі Г­Г  ГІГ®ГўГ Г°: %s || Out: В«%sВ»"):format(item, price))
 					goto skip
 				end
 
